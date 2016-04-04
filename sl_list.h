@@ -7,6 +7,8 @@
 #ifndef LAB_Z
 #define LAB_Z
 
+#include "sl_node.h"
+
 #include <iostream>
 #include <string>
 #include <cstring>
@@ -14,12 +16,13 @@ using std::cout;
 using std::endl;
 using std::string;
 
-class SLList {
+class SLList 
+{
     
     public: 
         SLList();
         ~SLList(void);
-        void InsertHead(int);
+        void InsertHead(int newHead);
         void RemoveHead();
         void Clear();
         unsigned int size() const;
