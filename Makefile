@@ -1,3 +1,13 @@
+lab19test: sl_list.h lab_19_unit_test.o sl_node.h
+	g++ -Wall -g -o lab19 sl_list.cpp lab_19_unit_test.o sl_node.cpp
+
+lab19: sl_list.cpp sl_node.cpp
+	g++ -Wall -g -c sl_list.cpp sl_node.cpp
+
+lab19_unit: lab_19_unit_test.cpp
+	g++ -Wall -g -c lab_19_unit_test.cpp
+
+
 lab18test: sl_list.h lab_18_unit_test.o sl_node.h
 	g++ -Wall -g -o lab18 sl_list.cpp lab_18_unit_test.o sl_node.cpp
 

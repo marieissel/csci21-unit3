@@ -23,13 +23,18 @@ class SLList
         SLList();
         ~SLList(void);
         void InsertHead(int newHead);
+        void InsertTail(int newTail);
         void RemoveHead();
+        void RemoveTail();
         void Clear();
         unsigned int size() const;
         string ToString() const;
+        int GetHead() const;
+        int GetTail() const;
     
     private:
         SLNode* head_; //points to the first node in a singly-linked list
+        SLNode* tail_; //points to the last node in a singly-linked list
         unsigned int size_; //stores the count of the number of nodes in the list
 };
 #endif

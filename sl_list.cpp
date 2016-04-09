@@ -15,7 +15,8 @@ using std::stringstream;
 
 SLList::SLList() 
 {
-    head_ = NULL; 
+    head_ = NULL;
+    tail_ = NULL; 
     size_ = 0;
 }
 
@@ -31,6 +32,25 @@ void SLList::InsertHead(int newHead)
     node->set_next_node(head_);
     head_ = node;
     size_++;
+    if (tail_ == NULL) {
+        tail_ = node;
+    }
+}
+
+void SLList::InsertTail(int newTail)
+{
+    SLNode* node = new SLNode(newTail);
+    if (head_ == NULL) {
+        // list is empty
+        head_ = node;
+        tail_ = node;
+        size_ = 1;
+    } else {
+        // list has at least 1 item
+        tail_->set_next_node(node);
+        tail_ = node;
+        size_++;
+    }
 }
 
 void SLList::RemoveHead()
@@ -38,18 +58,56 @@ void SLList::RemoveHead()
     //removes the head node from the list, or does nothing if the list is empty
     if(head_ != NULL)
     {
-        if(head_->next_node() != NULL)
+        // list is not empty
+        if (head_ == tail_) 
         {
+            // list only has 1 item in it, clear the list
+            delete head_;
+            head_ = NULL;
+            tail_ = NULL;
+            size_ = 0;
+            return;
+        } 
+        else 
+        {
+            // list has multiple items
             SLNode *tmp = head_->next_node();
             delete head_;
             head_ = tmp;
+            size_--;
+            return;
         }
-        else 
+    }
+}
+
+void SLList::RemoveTail()
+{
+    //removes the tail node from the list, or does nothing if the list is empty
+    SLNode *tmp = head_;
+    if(tmp != NULL)
+    {
+        // list is not empty
+        if (head_ == tail_)
         {
-            delete head_; 
+            // list only has 1 item in it, clear the list
+            delete head_;
             head_ = NULL;
+            tail_ = NULL;
+            size_ = 0;
+            return;
         }
+        while(tmp->next_node() != tail_)
+        {
+            // find the item just before the tail
+            tmp = tmp->next_node();
+        }
+        // delete the old tail
+        delete tail_;
+        // this will be the new end of the list
+        tmp->set_next_node(NULL);
+        tail_ = tmp;
         size_--;
+        return;
     }
 }
 
@@ -58,23 +116,35 @@ void SLList::Clear()
     //clears the entire contents of the list, freeing all memory associated with all nodes
     if(head_ != NULL)
     {
+        // list is not empty
         while (head_ != NULL)
         {
-            if(head_->next_node() != NULL)
-            {
-                SLNode *tmp = head_->next_node();
-                delete head_;
-                head_ = tmp;
-            }
-            else 
-            {
-                delete head_;
-                head_ = NULL;
-            }
+            RemoveHead();
         }
     }
-    size_ = 0;
 }
+
+int SLList::GetHead() const
+{
+    //  -- Returns the contents of the head node (The node head_ is pointing to) Returns 0 if the list is empty
+    if(head_ != NULL)
+    {
+        return head_->contents(); 
+    }
+    else return 0;
+    
+}
+
+int SLList::GetTail() const
+{
+    // -- Returns the contents of the tail node (The node tail_ is pointing to) Returns 0 if the list is empty
+     if(tail_ != NULL)
+    {
+        return tail_->contents(); 
+    }
+    else return 0;
+}
+
 
 unsigned int SLList::size() const
 {
